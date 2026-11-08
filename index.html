@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Exploring Treasury duration and the 10-year term premium, and compares with U.S. mortgage rates.">
+  <title>Treasury Duration and the 10-Year Term Premium</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="data.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main>
+    <header class="mast">
+      <p class="eyebrow"> Duration dashboard</p>
+      <h1>Treasury duration and<br class="desktop-break"> the 10-year term premium</h1>
+      <p class="intro">Track the price sensitivity of a 10-year Treasury note and the estimated compensation investors require to hold long-term Treasuries. Afterwards, compare the trend of duration from Jul 27, 2023 to Oct 19, 2023 with the U.S. 30-year fixed mortgage rate market. </p>
+    </header>
+
+    <section aria-labelledby="history-title">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">01 / Treasury history</p>
+          <h2 id="history-title">Two views of Treasury risk</h2>
+        </div>
+        <div class="controls" role="group" aria-label="Chart date range">
+          <button type="button" data-view="history" aria-pressed="true">2010–2025</button>
+          <button type="button" data-view="event" aria-pressed="false">2023 detail</button>
+        </div>
+      </div>
+      <div class="panel">
+        <div id="duration"></div>
+        <div id="premium"></div>
+        <p class="chart-note"><span class="swatch"></span> July 27–October 19, 2023 <span class="separator">·</span> <span id="frequency">Last shared trading observation each month</span></p>
+      </div>
+    </section>
+
+    <section aria-labelledby="mortgage-title">
+      <p class="eyebrow">02 / U.S. mortgage market</p>
+      <h2 id="mortgage-title">What happened to mortgage rates in 2023?</h2>
+      <p class="claim" id="claim"></p>
+      <div class="panel">
+        <div id="mortgage"></div>
+        <p class="chart-note"><span class="swatch"></span> July 27–October 19, 2023 <span class="separator">·</span> Freddie Mac weekly survey</p>
+      </div>
+      <table>
+        <caption>Changes over the same dates</caption>
+        <thead><tr><th scope="col">Measure</th><th scope="col">Jul 27</th><th scope="col">Oct 19</th><th scope="col">Change</th></tr></thead>
+        <tbody id="endpoints"></tbody>
+      </table>
+    </section>
+
+    <footer>
+      <h2>Method and sources</h2>
+      <p><strong>Duration.</strong> Each observation represents a hypothetical Treasury note with 10 years remaining and 20 semiannual payments. Its coupon rate equals that day’s 10-year constant-maturity yield, so it prices at par. Modified duration is the present-value-weighted average payment time divided by one plus the semiannual yield. It estimates the percentage price decline for a one-percentage-point increase in yield.</p>
+      <p><strong>Modified duration formula.</strong></p>
+      
+      <p style="text-align: center;">
+        <math display="inline" displaystyle="true" aria-label="Modified duration formula">
+          <msub><mi>D</mi><mtext>mod</mtext></msub>
+                <mo>=</mo>
+                <mfrac>
+                  <mfrac>
+                    <mrow>
+                      <munderover>
+                        <mo>∑</mo>
+                        <mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow>
+                        <mn>20</mn>
+                      </munderover>
+                      <mo>(</mo><mi>k</mi><mo>/</mo><mn>2</mn><mo>)</mo>
+                      <mi>PV</mi><mo>(</mo><msub><mi>CF</mi><mi>k</mi></msub><mo>)</mo>
+                    </mrow>
+                    <mi>P</mi>
+                  </mfrac>
+                  <mrow><mn>1</mn><mo>+</mo><mi>y</mi><mo>/</mo><mn>2</mn></mrow>
+                </mfrac>
+        </math>
+      </p>
+
+
+      <p>
+        <var>k</var> is the six-month payment number, so <var>k</var>/2 is
+        the payment time in years. <var>PV</var>(<var>CF</var><sub>k</sub>)
+        is the present value of that payment, discounted at the semiannual
+        yield <var>y</var>/2. <var>P</var> is the sum of those present values,
+        and <var>y</var> is the annual Treasury yield as a decimal.
+      </p>
+
+      <p><strong>Term premium and mortgages.</strong> The term premium is a New York Fed model estimate. Mortgage rates are Freddie Mac’s weekly national averages. The comparison measures changes between shared dates and describes how the two series moved over the window.</p>
+      <p class="sources"><a href="https://fred.stlouisfed.org/series/DGS10">Treasury yield · FRED</a><a href="https://www.newyorkfed.org/research/data_indicators/term-premia-tabs">ACM term premium · New York Fed</a><a href="https://fred.stlouisfed.org/series/MORTGAGE30US">Mortgage rates · Freddie Mac via FRED</a></p>
+      <p class="snapshot">Fixed data snapshot retrieved November 7, 2026.</p>
+    </footer>
+    <noscript>Enable JavaScript to draw the charts and calculate the comparison.</noscript>
+  </main>
+</body>
+</html>
